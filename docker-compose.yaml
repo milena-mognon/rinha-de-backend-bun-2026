@@ -16,11 +16,11 @@ services:
           memory: "30MB"
 
   api-1:
-    image: oven/bun:1.2-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
     working_dir: /app
     volumes:
-      - ./src:/app/src
-      - ./resources:/app/resources
       - socket_data:/tmp/sockets
     command: bun src/index.mjs
     networks:
@@ -34,11 +34,11 @@ services:
           memory: "160MB"
 
   api-2:
-    image: oven/bun:1.2-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
     working_dir: /app
     volumes:
-      - ./src:/app/src
-      - ./resources:/app/resources
       - socket_data:/tmp/sockets
     command: bun src/index.mjs
     networks:
