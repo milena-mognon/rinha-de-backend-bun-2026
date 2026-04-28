@@ -1,0 +1,54 @@
+services:
+  haproxy:
+    image: haproxy:3.0-alpine
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - socket_data:/tmp/sockets
+    ports:
+      - "9999:9999"
+    depends_on:
+      - api-1
+      - api-2
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: "30MB"
+
+  api-1:
+    image: milenamognon/rinha-backend-2026-bun:latest
+    volumes:
+      - socket_data:/tmp/sockets
+    networks:
+      - rinha
+    environment:
+      - SOCKET_PATH=/tmp/sockets/api-1.sock
+    deploy:
+      resources:
+        limits:
+          cpus: "0.45"
+          memory: "160MB"
+
+  api-2:
+    image: milenamognon/rinha-backend-2026-bun:latest
+    volumes:
+      - socket_data:/tmp/sockets
+    networks:
+      - rinha
+    environment:
+      - SOCKET_PATH=/tmp/sockets/api-2.sock
+    deploy:
+      resources:
+        limits:
+          cpus: "0.45"
+          memory: "160MB"
+
+networks:
+  rinha:
+    driver: bridge
+
+volumes:
+  socket_data:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs # Isso garante que o socket fique na RAM, não no disco

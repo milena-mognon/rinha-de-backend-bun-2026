@@ -1,0 +1,7 @@
+{
+    "participants": ["Milena Mognon"],
+    "social": ["https://github.com/milena-mognon", "https://www.linkedin.com/in/milena-mognon"],
+    "source-code-repo": "https://github.com/milena-mognon/rinha-de-backend-bun-2026",
+    "stack": ["javascript", "bun", "haproxy"],
+    "open_to_work": false
+}
